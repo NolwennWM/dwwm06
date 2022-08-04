@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecetteService } from './recette.service';
 import { EditRecetteComponent } from './edit-recette/edit-recette.component';
 import { RecetteFormComponent } from './recette-form/recette-form.component';
+import { FormsModule } from '@angular/forms';
 
 const recetteRoutes : Routes = [
   {path: "edit/recette/:id", component: EditRecetteComponent},
@@ -26,6 +27,7 @@ const recetteRoutes : Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(recetteRoutes)
   ],
   providers: [
