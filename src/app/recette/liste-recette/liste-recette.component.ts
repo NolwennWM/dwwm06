@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Recette } from '../Recette';
-import { RECETTES } from '../RecetteList';
+import { RecetteService } from '../recette.service';
 
 @Component({
   selector: 'app-liste-recette',
@@ -9,11 +10,15 @@ import { RECETTES } from '../RecetteList';
 })
 export class ListeRecetteComponent implements OnInit {
 
-  recetteList: Recette[] = RECETTES;
+  recetteList: Recette[] = [];
   recetteSelected?: Recette;
+  constructor(private router: Router, private recetteService: RecetteService){}
   ngOnInit(): void{
-    console.table(this.recetteList);
-    // this.selectRecette(this.recetteList[2]);
+    this.recetteList = this.recetteService.getRecetteList();
+    // console.table(this.recetteList);
+  }
+  goToRecette(recette: Recette){
+    this.router.navigate(["/recette", recette.id])
   }
   selectRecette(recetteId: string): void{
     const index: number = parseInt(recetteId);

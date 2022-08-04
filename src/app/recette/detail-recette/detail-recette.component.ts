@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Recette } from '../Recette';
-import { RECETTES } from '../RecetteList';
+import { RecetteService } from '../recette.service';
 
 @Component({
   selector: 'app-detail-recette',
@@ -9,14 +9,19 @@ import { RECETTES } from '../RecetteList';
   styleUrls: ['./detail-recette.component.scss']
 })
 export class DetailRecetteComponent implements OnInit {
-  recetteList: Recette[] = RECETTES;
   recette?: Recette;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router, private servRec: RecetteService) { }
 
   ngOnInit(): void {
     const recetteId: number = parseInt(this.route.snapshot.paramMap.get("id")??"");
-    this.recette = this.recetteList.find(rec=> rec.id === recetteId);
-    console.log(this.recette);
+    this.recette = this.servRec.getRecetteById(recetteId);
+    // console.log(this.recette);
+  }
+  goToRecetteList(): void{
+    this.router.navigate(["/recettes"])
+  }
+  goToEditRecette(): void{
+    this.router.navigate(["/edit/recette", this.recette?.id])
   }
   /**
    * Si on a trouvé une recette, on affiche toute ses informations.
