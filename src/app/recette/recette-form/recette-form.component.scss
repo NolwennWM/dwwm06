@@ -27,6 +27,6 @@
 .ng-valid[required]{
     border: 2px solid green;
 }
-.ng-invalid:not(form){
+.ng-invalid:not(form,.ng-pristine){
     border: 2px solid red;
 }

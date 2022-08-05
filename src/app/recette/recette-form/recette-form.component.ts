@@ -13,9 +13,11 @@ export class RecetteFormComponent implements OnInit {
   ingredientList: string = "";
   stepsList: string = "";
   types: string[]= [];
+  isAddForm: boolean = false;
   constructor(private recetteService: RecetteService, private router: Router) { }
 
   ngOnInit(): void {
+    this.isAddForm = this.router.url.includes("add");
     this.types = this.recetteService.getRecetteTypeList();
     this.ingredientList = this.recette?.ingredients.join("\n")??"";
     this.stepsList = this.recette?.steps.join("\n")??"";
@@ -33,7 +35,16 @@ export class RecetteFormComponent implements OnInit {
     if(this.recette){
       this.recette.ingredients = this.ingredientList.split("\n");
       this.recette.steps = this.stepsList.split("\n");
-      this.router.navigate(["/recette", this.recette.id])
+      if(this.isAddForm){
+        this.recetteService.addRecette(this.recette).subscribe(
+          (recette)=>this.router.navigate(["/recette",recette.id])
+        )
+      }else{
+        this.recetteService.updateRecette(this.recette).subscribe(
+          ()=>this.router.navigate(["/recette", this.recette?.id])
+        )
+      }
+      
     }
   }
 

@@ -14,7 +14,10 @@ export class ListeRecetteComponent implements OnInit {
   recetteSelected?: Recette;
   constructor(private router: Router, private recetteService: RecetteService){}
   ngOnInit(): void{
-    this.recetteList = this.recetteService.getRecetteList();
+    this.recetteService.getRecetteList().subscribe(
+      liste=> this.recetteList = liste
+    )
+    // this.recetteList = this.recetteService.getRecetteList();
     // console.table(this.recetteList);
   }
   goToRecette(recette: Recette){

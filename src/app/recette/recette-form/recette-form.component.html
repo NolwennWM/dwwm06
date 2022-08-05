@@ -37,6 +37,15 @@
                 required>
                 <span style="background-color: {{ t|typeColor}};">{{t}}</span>
         </label>
+        <div *ngIf="isAddForm">
+            <label for="photo">Photo :</label>
+            <input type="text" name="photo" id="photo"
+            required pattern=".+\.(jpg|jpeg|png)$"
+            [(ngModel)]="recette.image" #photo="ngModel">
+            <div class="error" [hidden]="photo.valid || photo.pristine">
+                La photo de la recette est requise (jpg ou png)
+            </div>
+        </div>
     </fieldset>
     <fieldset>
         <legend>Détails</legend>

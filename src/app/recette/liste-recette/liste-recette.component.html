@@ -1,6 +1,7 @@
 <input type="number" #inputRecette (keyup.enter)="selectRecette(inputRecette.value)">
 <p *ngIf="recetteSelected">Vous avez selectionnée : {{ recetteSelected.name }}</p>
 <p *ngIf="!recetteSelected">Aucune recette selectionnée</p>
+<a routerLink="/recette/add">Ajouter une Recette</a>
 <div class="container">
   <div class="recette" *ngFor="let rec of recetteList" appBorderCard="red" (click)="goToRecette(rec)">
       <div class="image">

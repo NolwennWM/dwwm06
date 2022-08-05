@@ -14,7 +14,10 @@ export class DetailRecetteComponent implements OnInit {
 
   ngOnInit(): void {
     const recetteId: number = parseInt(this.route.snapshot.paramMap.get("id")??"");
-    this.recette = this.servRec.getRecetteById(recetteId);
+    this.servRec.getRecetteById(recetteId).subscribe(
+      liste=> this.recette = liste
+    )
+    // this.recette = this.servRec.getRecetteById(recetteId);
     // console.log(this.recette);
   }
   goToRecetteList(): void{
@@ -22,6 +25,12 @@ export class DetailRecetteComponent implements OnInit {
   }
   goToEditRecette(): void{
     this.router.navigate(["/edit/recette", this.recette?.id])
+  }
+  deleteRecette(): void{
+    if(!this.recette) return;
+    this.servRec.deleteRecetteById(this.recette.id!).subscribe(
+      ()=>this.goToRecetteList()
+    )
   }
   /**
    * Si on a trouvé une recette, on affiche toute ses informations.
